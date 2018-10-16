@@ -14,13 +14,17 @@ public class Settings extends JFrame implements ActionListener {
     private JTextField sizeField;
     private JTextField bombsField;
 
+    private boolean inSettings;
+
     public Settings(){
+
         super("Settings");
+        super.setAlwaysOnTop(true);
+
         JPanel settingsPanel = new JPanel();
         Container s = getContentPane();
 
         gridSize = 8;
-
         bombs = 15;
 
         settingsPanel.setLayout(new GridLayout(3, 3, 2, 2));
@@ -31,9 +35,9 @@ public class Settings extends JFrame implements ActionListener {
         sizeField = new JTextField();
         bombsField = new JTextField();
 
-        JLabel bombsLabel = new JLabel("Number of bombs:");
-        JLabel gridSizeLabel = new JLabel("Size of Grid:");
-        JLabel doneLabel = new JLabel("Press when Done:");
+        JLabel bombsLabel = new JLabel("Bombs:");
+        JLabel gridSizeLabel = new JLabel("Grid Size:");
+        JLabel doneLabel = new JLabel("");
 
         gridSizeString = Integer.toString(gridSize);
         bombsString = Integer.toString(bombs);
@@ -81,7 +85,49 @@ public class Settings extends JFrame implements ActionListener {
     }
 
     public void done(){
-        setVisible(false);
+        String tempSizeStr = sizeField.getText();
+        String tempBombsStr = bombsField.getText();
+
+        int tempSize = gridSize;
+        int tempBombs = bombs;
+
+        try {
+            gridSize = Integer.parseInt(tempSizeStr);
+            bombs = Integer.parseInt(tempBombsStr);
+        }catch(NumberFormatException e){
+            gridSize = tempSize;
+            bombs = tempBombs;
+        }
+
+        boolean flag = true;
+
+        if(gridSize < 3){
+            gridSize = 3;
+            flag = false;
+        }
+        if(gridSize > 12){
+            gridSize = 12;
+            flag = false;
+        }
+
+        if((bombs < 2)){
+            bombs = 2;
+            flag = false;
+        }
+        if(bombs > (gridSize * gridSize)/2){
+            bombs = (gridSize * gridSize) / 2;
+            flag = false;
+        }
+
+        gridSizeString = Integer.toString(gridSize);
+        bombsString = Integer.toString(bombs);
+
+        if(flag){
+            setVisible(false);
+            setSettings(false);
+        }else{
+            setValues(gridSize, bombs);
+        }
     }
 
     public void redraw(){
@@ -90,6 +136,14 @@ public class Settings extends JFrame implements ActionListener {
         bombsField.setText(bombsString);
         sizeField.setText(gridSizeString);
         repaint();
+    }
+
+    public void setSettings(boolean bool){
+        inSettings = bool;
+    }
+
+    public boolean getSettings(){
+        return inSettings;
     }
 
 

@@ -32,6 +32,7 @@ public class Minesweeper extends JFrame implements ActionListener {
     public void initialize(){
 
         settings = new Settings();
+
         help = new Help();
 
         gridView = new JPanel();
@@ -41,6 +42,7 @@ public class Minesweeper extends JFrame implements ActionListener {
         bombs = settings.getBombs();
 
         grid = new Grid(gridSize, bombs);
+        grid.disableAllTiles();
 
         start = new JButton("Start");
         quit = new JButton("Quit");
@@ -79,6 +81,7 @@ public class Minesweeper extends JFrame implements ActionListener {
     }
 
     public void playGame(){
+        draw();
         start.setText("Restart");
         grid.enableAllTiles();
     }
@@ -111,23 +114,24 @@ public class Minesweeper extends JFrame implements ActionListener {
         c.add(buttons, BorderLayout.NORTH);
         c.add(gridView, BorderLayout.CENTER);
 
-        setSize(500, 600);
+        int number = gridSize * 65;
+        if(number < 400) {number = 400;}
+
+        setSize(number,  number + 100);
+        grid.disableAllTiles();
         setVisible(true);
     }
 
     public void settings(){
         grid.disableAllTiles();
         settings.setVisible(true);
-        settings.toFront();
-        settings.repaint();
+        settings.setSettings(true);
         start();
     }
 
     public void help(){
         grid.disableAllTiles();
         help.setVisible(true);
-        help.toFront();
-        help.repaint();
         start();
     }
 
