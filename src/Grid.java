@@ -7,12 +7,6 @@ public class Grid {
 
     private Tile[] tiles;
 
-    public Grid(){
-        gridSize = 8;
-        bombs = 20;
-        makeTiles();
-    }
-
     public Grid(int tiles, int numOfBombs){
         gridSize = tiles;
         bombs = numOfBombs;

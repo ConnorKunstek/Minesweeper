@@ -9,7 +9,9 @@ public class Minesweeper extends JFrame implements ActionListener {
 
     private Grid grid;
 
-    private Settings settingObject;
+    private Settings settings;
+
+    private Help help;
 
     private int gridSize;
     private int bombs;
@@ -18,8 +20,8 @@ public class Minesweeper extends JFrame implements ActionListener {
 
     private JButton start;
     private JButton quit;
-    private JButton settings;
-    private JButton help;
+    private JButton settingsButton;
+    private JButton helpButton;
 
     public Minesweeper(){
         super("Minesweeper");
@@ -29,20 +31,21 @@ public class Minesweeper extends JFrame implements ActionListener {
 
     public void initialize(){
 
-        settingObject = new Settings();
+        settings = new Settings();
+        help = new Help();
 
         gridView = new JPanel();
         buttons = new JPanel();
 
-        gridSize = settingObject.getGridSize();
-        bombs = settingObject.getBombs();
+        gridSize = settings.getGridSize();
+        bombs = settings.getBombs();
 
         grid = new Grid(gridSize, bombs);
 
         start = new JButton("Start");
         quit = new JButton("Quit");
-        settings = new JButton("Settings");
-        help = new JButton("Help");
+        settingsButton = new JButton("Settings");
+        helpButton = new JButton("Help");
 
         start.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -56,13 +59,13 @@ public class Minesweeper extends JFrame implements ActionListener {
             }
         });
 
-        settings.addActionListener(new ActionListener() {
+        settingsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 settings();
             }
         });
 
-        settings.addActionListener(new ActionListener() {
+        helpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 help();
             }
@@ -85,8 +88,8 @@ public class Minesweeper extends JFrame implements ActionListener {
         buttons.removeAll();
         gridView.removeAll();
 
-        gridSize = settingObject.getGridSize();
-        bombs = settingObject.getBombs();
+        gridSize = settings.getGridSize();
+        bombs = settings.getBombs();
 
         grid = new Grid(gridSize, bombs);
 
@@ -100,8 +103,8 @@ public class Minesweeper extends JFrame implements ActionListener {
         buttons.setLayout(new GridLayout(1, 4, 2, 2));
         buttons.add(start);
         buttons.add(quit);
-        buttons.add(settings);
-        buttons.add(help);
+        buttons.add(settingsButton);
+        buttons.add(helpButton);
 
         // Both panels should now be individually layed out
         // Add both panels to the container
@@ -114,14 +117,18 @@ public class Minesweeper extends JFrame implements ActionListener {
 
     public void settings(){
         grid.disableAllTiles();
-        settingObject.setVisible(true);
-        settingObject.toFront();
-        settingObject.repaint();
+        settings.setVisible(true);
+        settings.toFront();
+        settings.repaint();
         start();
     }
 
     public void help(){
-
+        grid.disableAllTiles();
+        help.setVisible(true);
+        help.toFront();
+        help.repaint();
+        start();
     }
 
     public void actionPerformed(ActionEvent e){}
