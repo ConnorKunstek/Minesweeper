@@ -113,7 +113,10 @@ public class Minesweeper extends JFrame implements ActionListener {
     }
 
     public void settings(){
+        grid.disableAllTiles();
         settingObject.setVisible(true);
+        settingObject.toFront();
+        settingObject.repaint();
         start();
     }
 
