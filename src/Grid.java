@@ -11,22 +11,20 @@ public class Grid {
         gridSize = 8;
         bombs = 20;
         makeTiles();
-        enableAllTiles();
     }
 
     public Grid(int tiles, int numOfBombs){
         gridSize = tiles;
         bombs = numOfBombs;
         makeTiles();
-        enableAllTiles();
     }
 
     public void makeTiles(){
 
-        this.tiles = new Tile[gridSize * gridSize];
+        tiles = new Tile[gridSize * gridSize];
         for(int i = 0; i < gridSize * gridSize; i++){
             Tile temp = new Tile(false, i);
-            this.tiles[i] = temp;
+            tiles[i] = temp;
         }
 
     }
@@ -39,13 +37,13 @@ public class Grid {
     }
 
     public void enableAllTiles(){
-        for(Tile t: this.tiles){
+        for(Tile t: tiles){
             t.setEnabled(true);
         }
     }
 
     public void disableAllTiles(){
-        for(Tile t: this.tiles){
+        for(Tile t: tiles){
             t.setEnabled(false);
         }
     }
