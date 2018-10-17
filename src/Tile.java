@@ -3,30 +3,40 @@ import java.awt.*;
 
 public class Tile extends JButton {
 
-    private int index;
-
+    private int row;
+    private int col;
     private boolean isBomb;
+    private boolean clicked;
+    private int adjacent;
+    private boolean clear;
 
     private ClassLoader loader = getClass().getClassLoader();
 
     private Icon back;
     private Icon front;
-    private boolean clicked;
 
-    private int adjacent;
 
-    public Tile(boolean bomb, int tileIndex){
+    public Tile(int rowNum, int colNum, boolean bomb){
         super();
         setBomb(bomb);
-        setIndex(tileIndex);
+        setRow(rowNum);
+        setCol(colNum);
         showBack();
         clicked = false;
     }
 
-    public void setAdjacent(int i){adjacent = i;}
+    public void setAdjacent(int i){
+        adjacent = i;
+        if(i == 0){
+            setClear(true);
+        }else{
+            setClear(false);
+        }
+    }
 
     public void showFront(){
         this.setIcon(front);
+        this.setEnabled(false);
     }
 
     public void showBack(){
@@ -37,8 +47,10 @@ public class Tile extends JButton {
         back = new ImageIcon(loader.getResource("res/blank.png"));
         if(isBomb()) {
             front = new ImageIcon(loader.getResource("res/mine.png"));
+            setDisabledIcon(front);
         }else{
             front = new ImageIcon(loader.getResource("res/" + adjacent + ".png"));
+            setDisabledIcon(front);
         }
     }
 
@@ -50,21 +62,30 @@ public class Tile extends JButton {
         this.isBomb = bool;
     }
 
-    public void setIndex(int integer){
-        this.index = integer;
+    public void setRow(int integer){
+        this.row = integer;
     }
-    public int getIndex(){
-        return this.index;
+    public void setCol(int integer){
+        this.col = integer;
+    }
+    public int getRow(){
+        return this.row;
+    }
+    public int getCol(){
+        return this.col;
     }
 
     public void clicked(){
-        if(isBomb()){
-            //Game Over
-            turnRed();
-        }else {
-            showFront();
-            clicked = true;
-        }
+        showFront();
+        clicked = true;
+    }
+
+    public void setClear(boolean bool){
+        clear = bool;
+    }
+
+    public boolean getClear(){
+        return clear;
     }
 
     public void turnRed(){
@@ -73,5 +94,9 @@ public class Tile extends JButton {
 
     public boolean isClicked(){
         return clicked;
+    }
+
+    public void gray(){
+        setDisabledIcon(null);
     }
 }

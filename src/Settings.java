@@ -114,23 +114,30 @@ public class Settings extends JFrame implements ActionListener {
         int tempSize = gridSize;
         int tempBombs = bombs;
 
+        boolean flag = true;
+
         try {
             gridSize = Integer.parseInt(tempSizeStr);
             bombs = Integer.parseInt(tempBombsStr);
         }catch(NumberFormatException e){
             gridSize = tempSize;
             bombs = tempBombs;
+            flag = false;
         }
 
-        boolean flag = true;
+        if((gridSize != tempSize) && (bombs != tempBombs) && (flag)){
+
+        }
+
+        boolean flag2 = true;
 
         if(gridSize < 3){
             gridSize = 3;
-            flag = false;
+            flag2 = false;
         }
         if(gridSize > 12){
             gridSize = 12;
-            flag = false;
+            flag2 = false;
         }
 
         if((bombs < 2)){
@@ -147,7 +154,7 @@ public class Settings extends JFrame implements ActionListener {
 
         if(flag){
             setVisible(false);
-            setSettings(false);
+            setValues(gridSize, bombs);
         }else{
             setValues(gridSize, bombs);
         }

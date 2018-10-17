@@ -74,25 +74,27 @@ public class Minesweeper extends JFrame implements ActionListener {
 
         settings.getDoneButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                draw();
+                start();
             }
         });
 
         settings.getBeginnerButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                draw();
+                start();
             }
         });
 
         settings.getIntermediateButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                draw();
+                gridSize = settings.getGridSize();
+                bombs = settings.getBombs();
+                start();
             }
         });
 
         settings.getExpertButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                draw();
+                start();
             }
         });
     }
@@ -148,8 +150,6 @@ public class Minesweeper extends JFrame implements ActionListener {
     public void settings(){
         grid.disableAllTiles();
         settings.setVisible(true);
-        settings.setSettings(true);
-        start();
     }
 
     public void help(){
