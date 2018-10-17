@@ -16,6 +16,11 @@ public class Settings extends JFrame implements ActionListener {
 
     private boolean inSettings;
 
+    private JButton done;
+    private JButton beginner;
+    private JButton intermediate;
+    private JButton expert;
+
     public Settings(){
 
         super("Settings");
@@ -28,10 +33,10 @@ public class Settings extends JFrame implements ActionListener {
         bombs = 15;
 
         settingsPanel.setLayout(new GridLayout(3, 3, 2, 2));
-        JButton beginner = new JButton("Beginner");
-        JButton intermediate = new JButton("Intermediate");
-        JButton expert = new JButton("Expert");
-        JButton done = new JButton("Done");
+        beginner = new JButton("Beginner");
+        intermediate = new JButton("Intermediate");
+        expert = new JButton("Expert");
+        done = new JButton("Done");
         sizeField = new JTextField();
         bombsField = new JTextField();
 
@@ -83,6 +88,24 @@ public class Settings extends JFrame implements ActionListener {
         s.add(settingsPanel);
         setSize(400, 200);
     }
+
+
+    public JButton getDoneButton(){
+        return done;
+    }
+
+    public JButton getBeginnerButton(){
+        return beginner;
+    }
+
+    public JButton getIntermediateButton(){
+        return intermediate;
+    }
+
+    public JButton getExpertButton(){
+        return expert;
+    }
+
 
     public void done(){
         String tempSizeStr = sizeField.getText();

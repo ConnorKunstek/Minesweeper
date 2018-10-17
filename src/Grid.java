@@ -84,6 +84,23 @@ public class Grid {
 
         int counter;
 
+
+//        for(int i = 0; i < gridSize; i++){
+//            for(int j = 0; j < gridSize; i++){
+//                counter = 0;
+//                try{if(grid[i-1][j-1].isBomb()){counter++;}}catch(Exception e){continue;}
+//                try{if(grid[i-1][j].isBomb()){counter++;}}catch(Exception e){continue;}
+//                try{if(grid[i-1][j+1].isBomb()){counter++;}}catch(Exception e){continue;}
+//                try{if(grid[i][j-1].isBomb()){counter++;}}catch(Exception e){continue;}
+//                try{if(grid[i][j+1].isBomb()){counter++;}}catch(Exception e){continue;}
+//                try{if(grid[i+1][j-1].isBomb()){counter++;}}catch(Exception e){continue;}
+//                try{if(grid[i+1][j].isBomb()){counter++;}}catch(Exception e){continue;}
+//                try{if(grid[i+1][j+1].isBomb()){counter++;}}catch(Exception e){continue;}
+//                grid[i][j].setAdjacent(counter);
+//            }
+//        }
+
+
         for(int i = 0; i < gridSize; i++){
             for(int j = 0; j < gridSize; j++){
                 counter = 0;

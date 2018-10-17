@@ -32,7 +32,6 @@ public class Minesweeper extends JFrame implements ActionListener {
     public void initialize(){
 
         settings = new Settings();
-
         help = new Help();
 
         gridView = new JPanel();
@@ -70,6 +69,30 @@ public class Minesweeper extends JFrame implements ActionListener {
         helpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 help();
+            }
+        });
+
+        settings.getDoneButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                draw();
+            }
+        });
+
+        settings.getBeginnerButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                draw();
+            }
+        });
+
+        settings.getIntermediateButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                draw();
+            }
+        });
+
+        settings.getExpertButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                draw();
             }
         });
     }
