@@ -2,7 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Help extends JFrame implements ActionListener{
 
@@ -29,21 +30,15 @@ public class Help extends JFrame implements ActionListener{
 
         done = new JButton("Done");
 
-        done.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                done();
-            }
-        });
-
-        helpPanel.add(message);
-        helpPanel.add(done);
+        helpPanel.add(message, BorderLayout.CENTER);
+        helpPanel.add(done, BorderLayout.SOUTH);
 
         h.add(helpPanel);
         setSize(400, 250);
     }
 
-    public void done(){
-        setVisible(false);
+    public JButton getDoneButton(){
+        return done;
     }
 
     public void actionPerformed(ActionEvent e){}

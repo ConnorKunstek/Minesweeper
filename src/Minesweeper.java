@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.TimerTask;
 
 public class Minesweeper extends JFrame implements ActionListener {
 
@@ -23,6 +24,11 @@ public class Minesweeper extends JFrame implements ActionListener {
     private JButton settingsButton;
     private JButton helpButton;
 
+    private TimerTask timerTask;
+    private Timer timer;
+    private JTextField timerLabel;
+    private int secondsPassed;
+
     public Minesweeper(){
         super("Minesweeper");
         initialize();
@@ -30,6 +36,17 @@ public class Minesweeper extends JFrame implements ActionListener {
     }
 
     public void initialize(){
+
+        timerTask = new TimerTask(){
+            public void run(){
+                secondsPassed++;
+                timerLabel.setText(Integer.toString(secondsPassed));
+            }
+        }
+        timer = new Timer(1000, timerTask);
+
+        timerLabel = new JTextField(9);
+        timerLabel.setEditable(false);
 
         settings = new Settings();
         help = new Help();
@@ -68,7 +85,13 @@ public class Minesweeper extends JFrame implements ActionListener {
 
         helpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                help();
+                helpOpen();
+            }
+        });
+
+        help.getDoneButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                helpClosed();
             }
         });
 
@@ -109,6 +132,7 @@ public class Minesweeper extends JFrame implements ActionListener {
         draw();
         start.setText("Restart");
         grid.enableAllTiles();
+        timer.restart();
     }
 
     public void draw(){
@@ -128,11 +152,13 @@ public class Minesweeper extends JFrame implements ActionListener {
         grid.fillBoardView(gridView);
 
         // Add required interface elements to the "label" JPanel
-        buttons.setLayout(new GridLayout(1, 4, 2, 2));
+        buttons.setLayout(new GridLayout(1, 5, 2, 2));
         buttons.add(start);
         buttons.add(quit);
         buttons.add(settingsButton);
         buttons.add(helpButton);
+        timerLabel = clock.getTimerLabel();
+        buttons.add(timerLabel);
 
         // Both panels should now be individually layed out
         // Add both panels to the container
@@ -152,10 +178,12 @@ public class Minesweeper extends JFrame implements ActionListener {
         settings.setVisible(true);
     }
 
-    public void help(){
-        grid.disableAllTiles();
+    public void helpOpen(){
         help.setVisible(true);
-        start();
+    }
+
+    public void helpClosed(){
+        help.setVisible(false);
     }
 
     public void actionPerformed(ActionEvent e){}

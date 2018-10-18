@@ -81,14 +81,14 @@ public class Grid {
         try {
             if ((row > -1) && (row < gridSize) && (col > -1) && (col < gridSize) && (grid[row][col].getClear())) {
                 grid[row][col].clicked();
-                //clearTiles(row - 1, col - 1);
+                clearTiles(row - 1, col - 1);
                 clearTiles(row - 1, col - 0);
-                //clearTiles(row - 1, col + 1);
+                clearTiles(row - 1, col + 1);
                 clearTiles(row - 0, col - 1);
                 clearTiles(row - 0, col + 1);
-                //clearTiles(row + 1, col - 1);
+                clearTiles(row + 1, col - 1);
                 clearTiles(row + 1, col - 0);
-                //clearTiles(row + 1, col + 1);
+                clearTiles(row + 1, col + 1);
             } else {
                 return;
             }
