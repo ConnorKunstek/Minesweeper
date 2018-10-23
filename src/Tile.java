@@ -57,7 +57,6 @@ public class Tile extends JButton {
     public boolean isBomb(){
         return this.isBomb;
     }
-
     public void setBomb(boolean bool){
         this.isBomb = bool;
     }
@@ -83,7 +82,6 @@ public class Tile extends JButton {
     public void setClear(boolean bool){
         clear = bool;
     }
-
     public boolean getClear(){
         return clear;
     }

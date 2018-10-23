@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.TimerTask;
 
 public class Minesweeper extends JFrame implements ActionListener {
 
@@ -14,9 +13,6 @@ public class Minesweeper extends JFrame implements ActionListener {
 
     private Help help;
 
-    private int gridSize;
-    private int bombs;
-
     private JPanel gridView, buttons;
 
     private JButton start;
@@ -24,7 +20,7 @@ public class Minesweeper extends JFrame implements ActionListener {
     private JButton settingsButton;
     private JButton helpButton;
 
-    private TimerTask timerTask;
+    private ActionListener timerListener;
     private Timer timer;
     private JTextField timerLabel;
     private int secondsPassed;
@@ -37,16 +33,16 @@ public class Minesweeper extends JFrame implements ActionListener {
 
     public void initialize(){
 
-        timerTask = new TimerTask(){
-            public void run(){
-                secondsPassed++;
-                timerLabel.setText(Integer.toString(secondsPassed));
-            }
-        }
-        timer = new Timer(1000, timerTask);
-
         timerLabel = new JTextField(9);
         timerLabel.setEditable(false);
+
+        timerListener = new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                secondsPassed++;
+                timerLabel.setText("Timer: " + Integer.toString(secondsPassed));
+            }
+        };
+        timer = new Timer(1000, timerListener);
 
         settings = new Settings();
         help = new Help();
@@ -54,10 +50,7 @@ public class Minesweeper extends JFrame implements ActionListener {
         gridView = new JPanel();
         buttons = new JPanel();
 
-        gridSize = settings.getGridSize();
-        bombs = settings.getBombs();
-
-        grid = new Grid(gridSize, bombs);
+        grid = new Grid(settings.getGridSize(), settings.getBombs());
         grid.disableAllTiles();
 
         start = new JButton("Start");
@@ -97,7 +90,7 @@ public class Minesweeper extends JFrame implements ActionListener {
 
         settings.getDoneButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                start();
+                playGame();
             }
         });
 
@@ -109,8 +102,6 @@ public class Minesweeper extends JFrame implements ActionListener {
 
         settings.getIntermediateButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                gridSize = settings.getGridSize();
-                bombs = settings.getBombs();
                 start();
             }
         });
@@ -133,6 +124,8 @@ public class Minesweeper extends JFrame implements ActionListener {
         start.setText("Restart");
         grid.enableAllTiles();
         timer.restart();
+        secondsPassed = 0;
+
     }
 
     public void draw(){
@@ -140,15 +133,12 @@ public class Minesweeper extends JFrame implements ActionListener {
         buttons.removeAll();
         gridView.removeAll();
 
-        gridSize = settings.getGridSize();
-        bombs = settings.getBombs();
-
-        grid = new Grid(gridSize, bombs);
+        grid = new Grid(settings.getGridSize(), settings.getBombs());
 
         Container c = getContentPane();
 
         // Add the game board to the board layout area
-        gridView.setLayout(new GridLayout(gridSize, gridSize, 2, 2));
+        gridView.setLayout(new GridLayout(settings.getGridSize(), settings.getGridSize(), 2, 2));
         grid.fillBoardView(gridView);
 
         // Add required interface elements to the "label" JPanel
@@ -157,15 +147,14 @@ public class Minesweeper extends JFrame implements ActionListener {
         buttons.add(quit);
         buttons.add(settingsButton);
         buttons.add(helpButton);
-        timerLabel = clock.getTimerLabel();
         buttons.add(timerLabel);
 
-        // Both panels should now be individually layed out
+        // Both panels should now be individually laid out
         // Add both panels to the container
         c.add(buttons, BorderLayout.NORTH);
         c.add(gridView, BorderLayout.CENTER);
 
-        int number = gridSize * 65;
+        int number = settings.getGridSize() * 65;
         if(number < 400) {number = 400;}
 
         setSize(number,  number + 100);
